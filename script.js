@@ -1,20 +1,33 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec?action=today";
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwuL4fQTx-RYpcEAjIfiTvTkYJioFxBZcXj4UItQcE/dev?action=today";
 
 fetch(API_URL)
   .then(res => res.json())
-  .then(json => renderTable(json.data));
+  .then(showData)
+  .catch(err => {
+    document.getElementById("table-container").innerHTML =
+      "Error loading data";
+    console.error(err);
+  });
 
-function renderTable(data) {
+function showData(response) {
+  // Show date
+  document.getElementById("date").innerText =
+    "Date: " + response.date;
+
+  const data = response.data;
+
   let html = "<table>";
 
   data.forEach(row => {
     html += "<tr>";
     row.forEach(cell => {
-      html += `<td>${cell}</td>`;
+      html += `<td>${cell || ""}</td>`;
     });
     html += "</tr>";
   });
 
   html += "</table>";
-  document.getElementById("content").innerHTML = html;
+
+  document.getElementById("table-container").innerHTML = html;
 }

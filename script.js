@@ -1,4 +1,4 @@
-const API_URL = "PASTE_YOUR_WEB_APP_URL_HERE?action=todayDistribution";
+const API_URL = "https://script.google.com/macros/s/AKfycbzF_dvHnzJMu4LQxrG3jV_tmexqhUysJ0NucoPMG97liFTmaROktLLE8PObYB3c_iQC/exec?action=todayDistribution";
 
 fetch(API_URL)
   .then(res => res.json())

@@ -1,4 +1,4 @@
-let visibilityChart = null;
+
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec?action=today";
 

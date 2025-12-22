@@ -102,7 +102,7 @@ function drawVisibility(data) {
   }
 }
 
-fetch("https://script.google.com/macros/s/AKfycbzNhIBtQPEmOndhGX2USXCZlYqwy2wVM-S-y5FOag_CvtguHhH8F2QqYRL9vnhSbUqD/exec?action=visibility")
+fetch("https://script.google.com/macros/s/AKfycbxM99vF8ROC_dAUCEZNqsnJkNWkeVcefdLx5-IpJ-72AC_geIRJbKesvdvnTHcLdh00/exec?action=visibility")
   .then(r => r.json())
   .then(drawVisibility);
 

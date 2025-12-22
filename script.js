@@ -38,50 +38,70 @@ function showData(response) {
 // ==============================
 
 
-const VIS_API = "https://script.google.com/macros/s/AKfycbzV4ui6UDakPD5O20MKjn63CUFPuExNkTmDOLicE73L59CK7zFH9WBnC8WZMLzJyAB8/exec?action=visibility";
-
-// ===== LOAD FUNCTION =====
-function loadVisibility() {
-  fetch(VIS_API)
-    .then(res => res.json())
-    .then(updateChart)
-    .catch(console.error);
+function colorForValue(v) {
+  if (v >= 5000) return "#16A34A";
+  if (v >= 3000) return "#2563EB";
+  if (v >= 2500) return "#EAB308";
+  return "#DC2626";
 }
 
-// ===== UPDATE CHART =====
-function updateChart(data) {
-  const ctx = document
-    .getElementById("visibilityChart")
-    .getContext("2d");
+function drawVisibility(data) {
+  const times = ["Now"];
+  const values = [data.observed];
 
-  if (!visibilityChart) {
-    visibilityChart = new Chart(ctx, {
+  data.forecast.forEach(f => {
+    times.push(f.time);
+    values.push(f.vis);
+  });
+
+  const colors = values.map(colorForValue);
+
+  const ctx = document.getElementById("visibilityChart").getContext("2d");
+
+  if (!window.visChart) {
+    window.visChart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: data.times,
+        labels: times,
         datasets: [{
           label: "Visibility (m)",
-          data: data.values,
-          borderColor: "#2563EB",
-          backgroundColor: "rgba(37,99,235,0.15)",
+          data: values,
+          borderColor: colors,
+          pointBackgroundColor: colors,
           tension: 0.3,
-          fill: true,
-          pointRadius: 4
+          pointRadius: 5
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: c => `${c.parsed.y} m`
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Meters" }
+          }
+        }
       }
     });
   } else {
-    visibilityChart.data.labels = data.times;
-    visibilityChart.data.datasets[0].data = data.values;
-    visibilityChart.update();
+    window.visChart.data.labels = times;
+    window.visChart.data.datasets[0].data = values;
+    window.visChart.data.datasets[0].borderColor = colors;
+    window.visChart.data.datasets[0].pointBackgroundColor = colors;
+    window.visChart.update();
   }
 }
 
-// ===== INITIAL LOAD + AUTO REFRESH =====
-loadVisibility();
-setInterval(loadVisibility, 600000);
+fetch("https://script.google.com/macros/s/AKfycbzNhIBtQPEmOndhGX2USXCZlYqwy2wVM-S-y5FOag_CvtguHhH8F2QqYRL9vnhSbUqD/exec?action=visibility")
+  .then(r => r.json())
+  .then(drawVisibility);
+
+
 

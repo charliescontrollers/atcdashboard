@@ -39,10 +39,10 @@ function showData(response) {
 // ==============================
 
 function colorForValue(v) {
-  if (v >= 5000) return "#16A34A";   // green
-  if (v >= 3000) return "#2563EB";   // blue
-  if (v >= 2500) return "#EAB308";   // yellow
-  return "#DC2626";                  // red
+  if (v >= 5000) return "#16A34A";
+  if (v >= 3000) return "#2563EB";
+  if (v >= 2500) return "#EAB308";
+  return "#DC2626";
 }
 
 function drawVisibility(data) {
@@ -119,8 +119,4 @@ function drawVisibility(data) {
 // ==============================
 
 fetch(
-  "https://script.google.com/macros/s/AKfycbxM99vF8ROC_dAUCEZNqsnJkNWkeVcefdLx5-IpJ-72AC_geIRJbKesvdvnTHcLdh00/exec?action=visibility"
-)
-  .then(r => r.json())
-  .then(drawVisibility)
-  .catch(err => console.error("Visibility API error:", err));
+  "https:/

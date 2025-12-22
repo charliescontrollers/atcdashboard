@@ -1,3 +1,11 @@
+:root {
+  --bg-main: #F4F7FB;
+  --card-bg: #FFFFFF;
+  --border-light: #E1E5EA;
+  --text-primary: #222;
+  --text-muted: #666;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: #f4f6f8;
@@ -28,3 +36,6 @@ td {
 tr:nth-child(even) {
   background: #f9f9f9;
 }
+
+
+

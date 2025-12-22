@@ -1,3 +1,4 @@
+let visibilityChart = null;
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec?action=today";
 
@@ -36,60 +37,10 @@ function showData(response) {
 // VISIBILITY GRAPH (SAMPLE DATA)
 // ==============================
 
-const visibilityData = {
-  times: [
-    "02:00", "03:00", "04:00", "05:00",
-    "06:00", "07:00", "08:00"
-  ],
-  values: [3000, 2500, 2000, 1800, 2200, 4000, 6000]
-};
-
-const ctx = document.getElementById("visibilityChart").getContext("2d");
-
-const visibilityChart = new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: visibilityData.times,
-    datasets: [{
-      label: "Visibility (meters)",
-      data: visibilityData.values,
-      borderColor: "#2563EB",      // aviation blue
-      backgroundColor: "rgba(37, 99, 235, 0.1)",
-      tension: 0.3,
-      fill: true,
-      pointRadius: 4,
-      pointHoverRadius: 6
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true
-      }
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Time (UTC)"
-        }
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Visibility (meters)"
-        },
-        beginAtZero: true
-      }
-    }
-  }
-});
 
 const VIS_API = "https://script.google.com/macros/s/AKfycbzV4ui6UDakPD5O20MKjn63CUFPuExNkTmDOLicE73L59CK7zFH9WBnC8WZMLzJyAB8/exec?action=visibility";
-let visibilityChart;
 
+// ===== LOAD FUNCTION =====
 function loadVisibility() {
   fetch(VIS_API)
     .then(res => res.json())
@@ -97,8 +48,11 @@ function loadVisibility() {
     .catch(console.error);
 }
 
+// ===== UPDATE CHART =====
 function updateChart(data) {
-  const ctx = document.getElementById("visibilityChart").getContext("2d");
+  const ctx = document
+    .getElementById("visibilityChart")
+    .getContext("2d");
 
   if (!visibilityChart) {
     visibilityChart = new Chart(ctx, {
@@ -117,16 +71,7 @@ function updateChart(data) {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: "Meters" }
-          },
-          x: {
-            title: { display: true, text: "UTC Time" }
-          }
-        }
+        maintainAspectRatio: false
       }
     });
   } else {
@@ -136,12 +81,7 @@ function updateChart(data) {
   }
 }
 
-// initial load
+// ===== INITIAL LOAD + AUTO REFRESH =====
 loadVisibility();
-
-// auto refresh every 10 minutes
 setInterval(loadVisibility, 600000);
-
-
-
 

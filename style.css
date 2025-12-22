@@ -98,5 +98,19 @@ body {
   }
 }
 
+body.night {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+body.night .card,
+body.night table {
+  background: #020617;
+  border-color: #1e293b;
+}
+
+body.night canvas {
+  background: transparent;
+}
 
 

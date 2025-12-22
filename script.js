@@ -202,14 +202,14 @@ if (values.length >= 2) {
 // ==============================
 
 fetch(
-  "https://script.google.com/macros/s/AKfycbzKxj3Ky_CDhmvEk1GFMp4w7mLRf90ZSbWeNJkrnw6DHZwn9WOiLa-_CddQvzAePVI3/exec?action=visibility"
+  "https://script.google.com/macros/s/AKfycbwRErfnv8Pv0dj42V56XcBf7o5lmi5gApTMFwKY5CHZp1BsAfc2Zl0PdEgQi9XBtnv5/exec?action=visibility"
 )
   .then(r => r.json())
   .then(drawVisibility)
   .catch(err => console.error("Visibility API error:", err));
 
 function loadVisibility() {
-  fetch("https://script.google.com/macros/s/AKfycbzKxj3Ky_CDhmvEk1GFMp4w7mLRf90ZSbWeNJkrnw6DHZwn9WOiLa-_CddQvzAePVI3/exec?action=visibility")
+  fetch("https://script.google.com/macros/s/AKfycbwRErfnv8Pv0dj42V56XcBf7o5lmi5gApTMFwKY5CHZp1BsAfc2Zl0PdEgQi9XBtnv5/exec?action=visibility")
     .then(r => r.json())
     .then(drawVisibility)
     .catch(console.error);

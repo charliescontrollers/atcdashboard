@@ -140,12 +140,8 @@ function updateChart(data) {
 loadVisibility();
 
 // auto refresh every 10 minutes
-//setInterval(loadVisibility, 600000);
+setInterval(loadVisibility, 600000);
 
 
-setInterval(() => {
-  fetch(VIS_API)
-    .then(res => res.json())
-    .then(drawVisibilityChart);
-}, 600000); // every 10 minutes
+
 

@@ -95,6 +95,23 @@ const sound = document.getElementById("lowVisSound");
 if (values[0] < 800) {
   alertBox.innerText = `⚠ LOW VISIBILITY: ${values[0]} m`;
   alertBox.style.display = "block";
+  const trendBox = document.getElementById("trend-arrow");
+
+if (values.length >= 2) {
+  const diff = values[0] - values[1];
+
+  if (diff > 100) {
+    trendBox.innerText = "📉 Falling visibility";
+    trendBox.style.color = "#DC2626";
+  } else if (diff < -100) {
+    trendBox.innerText = "📈 Improving visibility";
+    trendBox.style.color = "#16A34A";
+  } else {
+    trendBox.innerText = "➡ Stable visibility";
+    trendBox.style.color = "#64748B";
+  }
+}
+
 
   if (!lowVisAlertPlayed) {
     sound.play().catch(() => {});

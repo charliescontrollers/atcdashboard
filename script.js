@@ -87,47 +87,61 @@ const visibilityChart = new Chart(ctx, {
   }
 });
 
-const VIS_API =
-  "https://script.google.com/macros/s/AKfycbweDy419N84RkKtpHRXaOWTBAN1Hu3D_GcmIkP5zB8Bs2MXcdF6EKWcVVhP5uR50dYy/exec?action=visibility";
+const VIS_API = "https://script.google.com/macros/s/AKfycbzV4ui6UDakPD5O20MKjn63CUFPuExNkTmDOLicE73L59CK7zFH9WBnC8WZMLzJyAB8/exec?action=visibility";
+let visibilityChart;
 
-fetch(VIS_API)
-  .then(res => res.json())
-  .then(drawVisibilityChart);
+function loadVisibility() {
+  fetch(VIS_API)
+    .then(res => res.json())
+    .then(updateChart)
+    .catch(console.error);
+}
 
-function drawVisibilityChart(data) {
-  const ctx = document
-    .getElementById("visibilityChart")
-    .getContext("2d");
+function updateChart(data) {
+  const ctx = document.getElementById("visibilityChart").getContext("2d");
 
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: data.times,
-      datasets: [{
-        label: "Visibility (m)",
-        data: data.values,
-        borderColor: "#2563EB",
-        backgroundColor: "rgba(37,99,235,0.15)",
-        tension: 0.3,
-        fill: true,
-        pointRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: { display: true, text: "Meters" }
-        },
-        x: {
-          title: { display: true, text: "UTC Time" }
+  if (!visibilityChart) {
+    visibilityChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: data.times,
+        datasets: [{
+          label: "Visibility (m)",
+          data: data.values,
+          borderColor: "#2563EB",
+          backgroundColor: "rgba(37,99,235,0.15)",
+          tension: 0.3,
+          fill: true,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Meters" }
+          },
+          x: {
+            title: { display: true, text: "UTC Time" }
+          }
         }
       }
-    }
-  });
+    });
+  } else {
+    visibilityChart.data.labels = data.times;
+    visibilityChart.data.datasets[0].data = data.values;
+    visibilityChart.update();
+  }
 }
+
+// initial load
+loadVisibility();
+
+// auto refresh every 10 minutes
+setInterval(loadVisibility, 600000);
+
 
 setInterval(() => {
   fetch(VIS_API)

@@ -1,42 +1,90 @@
+/* ===============================
+   GLOBAL THEME VARIABLES
+   =============================== */
 :root {
-  --bg-main: #FF0000;
+  --bg-main: #F4F7FB;
   --card-bg: #FFFFFF;
   --border-light: #E1E5EA;
-  --text-primary: #222;
-  --text-muted: #666;
+  --text-primary: #222222;
+  --text-muted: #666666;
+}
+
+/* ===============================
+   BASE RESET
+   =============================== */
+* {
+  box-sizing: border-box;
+}
+
+/* ===============================
+   BODY
+   =============================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
 }
 
 body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
 }
 
+/* ===============================
+   PAGE LAYOUT
+   =============================== */
 h1 {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 #date {
-  margin-bottom: 15px;
-  color: #555;
+  color: var(--text-muted);
+  margin-bottom: 16px;
 }
 
+/* ===============================
+   CARD CONTAINER
+   =============================== */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* ===============================
+   TABLE STYLING
+   =============================== */
 table {
-  border-collapse: collapse;
   width: 100%;
-  background: #fff;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
 }
 
 td {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-light);
   padding: 8px;
-  vertical-align: top;
+  font-size: 14px;
 }
 
-tr:nth-child(even) {
-  background: #f9f9f9;
+/* ===============================
+   RESPONSIVE HELPERS
+   =============================== */
+.table-wrapper {
+  overflow-x: auto;
 }
 
+/* ===============================
+   DEBUG (REMOVE LATER)
+   =============================== */
+/* Uncomment to visually confirm CSS is loading */
+/*
+body {
+  outline: 5px solid red;
+}
+*/
 
 

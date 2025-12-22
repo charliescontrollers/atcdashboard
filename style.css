@@ -7,9 +7,10 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  padding: 20px;
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
 }
 
 h1 {

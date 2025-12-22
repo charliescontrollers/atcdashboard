@@ -1,3 +1,6 @@
+let lowVisAlertPlayed = false;
+
+
 function colorForValue(v) {
   if (v >= 5000) return "#16A34A";   // green
   if (v >= 3000) return "#2563EB";   // blue
@@ -86,13 +89,22 @@ function drawVisibility(data) {
   const values = data.series.map(p => Number(p.vis));
 
   // ---- LOW VIS ALERT ----
-  const alertBox = document.getElementById("vis-alert");
-  if (values[0] < 2500) {
-    alertBox.innerText = `⚠ LOW VISIBILITY: ${values[0]} m`;
-    alertBox.style.display = "block";
-  } else {
-    alertBox.style.display = "none";
+ const alertBox = document.getElementById("vis-alert");
+const sound = document.getElementById("lowVisSound");
+
+if (values[0] < 800) {
+  alertBox.innerText = `⚠ LOW VISIBILITY: ${values[0]} m`;
+  alertBox.style.display = "block";
+
+  if (!lowVisAlertPlayed) {
+    sound.play().catch(() => {});
+    lowVisAlertPlayed = true;
   }
+} else {
+  alertBox.style.display = "none";
+  lowVisAlertPlayed = false;
+}
+
 
   // ---- RAW TAF DISPLAY ----
   if (data.rawTAF) {

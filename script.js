@@ -88,7 +88,7 @@ const visibilityChart = new Chart(ctx, {
 });
 
 const VIS_API =
-  "PASTE_YOUR_SCRIPT_URL?action=visibility";
+  "https://script.google.com/macros/s/AKfycbweDy419N84RkKtpHRXaOWTBAN1Hu3D_GcmIkP5zB8Bs2MXcdF6EKWcVVhP5uR50dYy/exec?action=visibility";
 
 fetch(VIS_API)
   .then(res => res.json())

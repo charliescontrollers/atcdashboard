@@ -46,8 +46,11 @@ function colorForValue(v) {
 }
 
 function drawVisibility(data) {
-  const times = ["Now"];
-  const values = [data.observed];
+  const times = data.series.map(p => p.time);
+  const values = data.series.map(p => p.vis);
+
+  // rest of your chart code stays SAME
+}
 
   data.forecast.forEach(f => {
     times.push(f.time);

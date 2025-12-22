@@ -1,3 +1,13 @@
+function applyNightMode() {
+  const hour = new Date().getUTCHours();
+  if (hour >= 18 || hour <= 6) {
+    document.body.classList.add("night");
+  } else {
+    document.body.classList.remove("night");
+  }
+}
+
+
 let lowVisAlertPlayed = false;
 
 
@@ -207,4 +217,7 @@ function loadVisibility() {
 
 loadVisibility();
 setInterval(loadVisibility, 600000); // 10 minutes
+
+applyNightMode();
+
 

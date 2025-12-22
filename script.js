@@ -119,4 +119,8 @@ function drawVisibility(data) {
 // ==============================
 
 fetch(
-  "https:/
+  "https://script.google.com/macros/s/AKfycbxM99vF8ROC_dAUCEZNqsnJkNWkeVcefdLx5-IpJ-72AC_geIRJbKesvdvnTHcLdh00/exec?action=visibility"
+)
+  .then(r => r.json())
+  .then(drawVisibility)
+  .catch(err => console.error("Visibility API error:", err));

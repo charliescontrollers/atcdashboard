@@ -93,6 +93,11 @@ function colorForValue(v) {
 }
 
 function drawVisibility(data) {
+  const meta = document.getElementById("vis-meta");
+meta.innerText =
+  `Source: ${data.source}` +
+  (data.issueTime ? ` | Issued: ${data.issueTime} UTC` : "");
+
   if (!data.series || data.series.length === 0) return;
 
   const times = data.series.map(p => p.time);

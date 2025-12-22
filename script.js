@@ -1,3 +1,37 @@
+function colorForValue(v) {
+  if (v >= 5000) return "#16A34A";   // green
+  if (v >= 3000) return "#2563EB";   // blue
+  if (v >= 2500) return "#EAB308";   // yellow
+  return "#DC2626";                  // red
+}
+const catBandsPlugin = {
+  id: "catBands",
+  beforeDraw(chart) {
+    const { ctx, chartArea, scales } = chart;
+    if (!chartArea) return;
+
+    const y = scales.y;
+    const bands = [
+      { from: 0, to: 2500, color: "rgba(220,38,38,0.08)" },
+      { from: 2500, to: 3000, color: "rgba(234,179,8,0.08)" },
+      { from: 3000, to: 5000, color: "rgba(37,99,235,0.08)" },
+      { from: 5000, to: 10000, color: "rgba(22,163,74,0.06)" }
+    ];
+
+    bands.forEach(b => {
+      ctx.fillStyle = b.color;
+      ctx.fillRect(
+        chartArea.left,
+        y.getPixelForValue(b.to),
+        chartArea.right - chartArea.left,
+        y.getPixelForValue(b.from) - y.getPixelForValue(b.to)
+      );
+    });
+  }
+};
+
+
+
 // ==============================
 // DAILY UNIT DISTRIBUTION TABLE
 // ==============================
@@ -46,14 +80,24 @@ function colorForValue(v) {
 }
 
 function drawVisibility(data) {
-  if (!data.series || data.series.length === 0) {
-    console.warn("No visibility data received");
-    return;
-  }
+  if (!data.series || data.series.length === 0) return;
 
   const times = data.series.map(p => p.time);
   const values = data.series.map(p => Number(p.vis));
-  const colors = values.map(colorForValue);
+
+  // ---- LOW VIS ALERT ----
+  const alertBox = document.getElementById("vis-alert");
+  if (values[0] < 2500) {
+    alertBox.innerText = `⚠ LOW VISIBILITY: ${values[0]} m`;
+    alertBox.style.display = "block";
+  } else {
+    alertBox.style.display = "none";
+  }
+
+  // ---- RAW TAF DISPLAY ----
+  if (data.rawTAF) {
+    document.getElementById("taf-box").innerText = data.rawTAF;
+  }
 
   const ctx = document
     .getElementById("visibilityChart")
@@ -67,51 +111,51 @@ function drawVisibility(data) {
         datasets: [{
           label: "Visibility (m)",
           data: values,
-          borderColor: colors,
-          pointBackgroundColor: colors,
-          pointRadius: 5,
-          tension: 0.3
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: values.map(colorForValue),
+          segment: {
+            borderColor: ctx => {
+              const y = ctx.p0.parsed.y;
+              if (y >= 5000) return "#16A34A";
+              if (y >= 3000) return "#2563EB";
+              if (y >= 2500) return "#EAB308";
+              return "#DC2626";
+            }
+          }
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        interaction: {
-          mode: "index",
-          intersect: false
-        },
+        interaction: { mode: "index", intersect: false },
         plugins: {
           tooltip: {
             callbacks: {
-              label: ctx => `${ctx.parsed.y} m`
+              label: c => `${c.parsed.y} m`
             }
           }
         },
         scales: {
           y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: "Visibility (meters)"
-            }
+            min: 0,
+            max: 10000,
+            title: { display: true, text: "Visibility (meters)" }
           },
           x: {
-            title: {
-              display: true,
-              text: "UTC Time"
-            }
+            title: { display: true, text: "UTC Time" }
           }
         }
-      }
+      },
+      plugins: [catBandsPlugin]
     });
   } else {
     window.visChart.data.labels = times;
     window.visChart.data.datasets[0].data = values;
-    window.visChart.data.datasets[0].borderColor = colors;
-    window.visChart.data.datasets[0].pointBackgroundColor = colors;
     window.visChart.update();
   }
 }
+
 
 
 // ==============================
@@ -124,3 +168,14 @@ fetch(
   .then(r => r.json())
   .then(drawVisibility)
   .catch(err => console.error("Visibility API error:", err));
+
+function loadVisibility() {
+  fetch("https://script.google.com/macros/s/AKfycbxM99vF8ROC_dAUCEZNqsnJkNWkeVcefdLx5-IpJ-72AC_geIRJbKesvdvnTHcLdh00/exec?action=visibility")
+    .then(r => r.json())
+    .then(drawVisibility)
+    .catch(console.error);
+}
+
+loadVisibility();
+setInterval(loadVisibility, 600000); // 10 minutes
+

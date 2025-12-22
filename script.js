@@ -87,3 +87,51 @@ const visibilityChart = new Chart(ctx, {
   }
 });
 
+const VIS_API =
+  "PASTE_YOUR_SCRIPT_URL?action=visibility";
+
+fetch(VIS_API)
+  .then(res => res.json())
+  .then(drawVisibilityChart);
+
+function drawVisibilityChart(data) {
+  const ctx = document
+    .getElementById("visibilityChart")
+    .getContext("2d");
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: data.times,
+      datasets: [{
+        label: "Visibility (m)",
+        data: data.values,
+        borderColor: "#2563EB",
+        backgroundColor: "rgba(37,99,235,0.15)",
+        tension: 0.3,
+        fill: true,
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: "Meters" }
+        },
+        x: {
+          title: { display: true, text: "UTC Time" }
+        }
+      }
+    }
+  });
+}
+
+setInterval(() => {
+  fetch(VIS_API)
+    .then(res => res.json())
+    .then(drawVisibilityChart);
+}, 600000); // every 10 minutes
+

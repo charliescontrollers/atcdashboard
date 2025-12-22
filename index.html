@@ -14,7 +14,31 @@
   
   <div class="card">
   <h2>Bengaluru Airport Visibility (VOBL)</h2>
+    <!-- LOW VISIBILITY ALERT -->
+<div id="vis-alert"
+     style="
+       display:none;
+       background:#DC2626;
+       color:white;
+       padding:8px;
+       font-weight:bold;
+       border-radius:6px;
+       margin-bottom:8px;">
+</div>
+
   <canvas id="visibilityChart"></canvas>
+    <!-- RAW TAF DISPLAY -->
+<pre id="taf-box"
+     style="
+       margin-top:10px;
+       background:#0f172a;
+       color:#e5e7eb;
+       padding:10px;
+       border-radius:6px;
+       font-size:12px;
+       white-space:pre-wrap;">
+</pre>
+
 </div>
   
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

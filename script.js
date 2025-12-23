@@ -93,6 +93,7 @@ function colorForValue(v) {
 }
 
 function drawVisibility(data) {
+  renderWeatherTable(data.weather);
   const meta = document.getElementById("vis-meta");
 meta.innerText =
   `Source: ${data.source}` +

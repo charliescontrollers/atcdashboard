@@ -206,19 +206,26 @@ if (values.length >= 2) {
 // FETCH VISIBILITY DATA
 // ==============================
 
-fetch(
-  "https://script.google.com/macros/s/AKfycbyrkj30M75jc3UNnzENGQW-ajjz0R4arY8mgTKOUszT7mOtEYOSVBYsXspFJFc76Xz4/exec?action=visibility"
-)
-  .then(r => r.json())
-  .then(drawVisibility)
-  .catch(err => console.error("Visibility API error:", err));
+
 
 function loadVisibility() {
-  fetch("https://script.google.com/macros/s/AKfycbyrkj30M75jc3UNnzENGQW-ajjz0R4arY8mgTKOUszT7mOtEYOSVBYsXspFJFc76Xz4/exec?action=visibility")
-    .then(r => r.json())
-    .then(drawVisibility)
-    .catch(console.error);
+  const script = document.createElement("script");
+  script.src =
+    "https://script.google.com/macros/s/AKfycbyrkj30M75jc3UNnzENGQW-ajjz0R4arY8mgTKOUszT7mOtEYOSVBYsXspFJFc76Xz4/exec" +
+    "?action=visibility&callback=handleVisibility";
+
+  document.body.appendChild(script);
 }
+
+// JSONP callback (called by Apps Script)
+function handleVisibility(data) {
+  drawVisibility(data);
+}
+
+// Load once + refresh every 10 min
+loadVisibility();
+setInterval(loadVisibility, 600000);
+
 
 loadVisibility();
 setInterval(loadVisibility, 600000); // 10 minutes

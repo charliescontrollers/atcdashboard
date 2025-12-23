@@ -58,11 +58,13 @@ h1 {
 /* ===============================
    TABLE STYLING
    =============================== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: var(--card-bg);
+
+#table-container table {
+  width: 50%;
+  max-width: 600px;
 }
+
+
 
 td {
   border: 1px solid var(--border-light);
@@ -111,11 +113,6 @@ body.night table {
 
 body.night canvas {
   background: transparent;
-}
-
-#table-container table {
-  width: 50%;
-  max-width: 600px;
 }
 
 

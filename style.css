@@ -115,5 +115,21 @@ body.night canvas {
   background: transparent;
 }
 
+.chart-wrapper {
+  width: 50%;
+  max-width: 600px;
+}
+
+/* Ensure canvas respects wrapper */
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+@media (max-width: 768px) {
+  .chart-wrapper {
+    width: 100%;
+  }
+}
+
 
 

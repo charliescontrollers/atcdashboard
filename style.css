@@ -122,7 +122,7 @@ body.night canvas {
 
 /* Ensure canvas respects wrapper */
 .chart-wrapper canvas {
-  width: 50% !important;
+  width: 100% !important;
   height: 300px !important;
 }
 @media (max-width: 768px) {

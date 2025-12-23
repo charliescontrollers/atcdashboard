@@ -139,9 +139,11 @@ if (values.length >= 2) {
 
 
   // ---- RAW TAF DISPLAY ----
-  if (data.rawTAF) {
-    document.getElementById("taf-box").innerText = data.rawTAF;
-  }
+const tafBox = document.getElementById("taf-box");
+if (tafBox && data.raw) {
+  tafBox.innerText = data.raw;
+}
+
 
   const ctx = document
     .getElementById("visibilityChart")

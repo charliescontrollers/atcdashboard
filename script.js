@@ -214,7 +214,7 @@ if (tafBox && data.raw) {
 function loadVisibility() {
   const script = document.createElement("script");
   script.src =
-    "https://script.google.com/macros/s/AKfycbxHyE2gWwTyHEDexn7TWrnQIurlGItBCVBi76xpZYq33jeYai1VpWvnxlCluZAFnX3x/exec" + "?action=visibility&callback=handleVisibility";
+    "https://script.google.com/macros/s/AKfycbzJicHzGVbchseiKinHzWFqAoyeP7GdzhqJyefI4h600i0FcAKiqI8QY3Ntjg18sb3F/exec" + "?action=visibility&callback=handleVisibility";
 
   document.body.appendChild(script);
 }

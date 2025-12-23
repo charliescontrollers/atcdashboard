@@ -233,4 +233,20 @@ setInterval(loadVisibility, 600000); // 10 minutes
 
 applyNightMode();
 
+function renderWeatherTable(weather) {
+  const table = document.getElementById("weather-table");
+  if (!table || !weather) {
+    table.innerHTML = "<tr><td>No METAR weather available</td></tr>";
+    return;
+  }
+
+  table.innerHTML = `
+    <tr><td>Wind</td><td>${weather.wind}</td></tr>
+    <tr><td>Visibility</td><td>${weather.visibility}</td></tr>
+    <tr><td>Weather</td><td>${weather.weather}</td></tr>
+    <tr><td>Clouds</td><td>${weather.clouds}</td></tr>
+    <tr><td>Temp / Dew</td><td>${weather.temp}</td></tr>
+    <tr><td>QNH</td><td>${weather.qnh}</td></tr>
+  `;
+}
 

@@ -211,8 +211,7 @@ if (values.length >= 2) {
 function loadVisibility() {
   const script = document.createElement("script");
   script.src =
-    "https://script.google.com/macros/s/AKfycbyrkj30M75jc3UNnzENGQW-ajjz0R4arY8mgTKOUszT7mOtEYOSVBYsXspFJFc76Xz4/exec" +
-    "?action=visibility&callback=handleVisibility";
+    "https://script.google.com/macros/s/AKfycbxHyE2gWwTyHEDexn7TWrnQIurlGItBCVBi76xpZYq33jeYai1VpWvnxlCluZAFnX3x/exec" + "?action=visibility&callback=handleVisibility";
 
   document.body.appendChild(script);
 }

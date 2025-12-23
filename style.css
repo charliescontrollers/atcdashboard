@@ -131,5 +131,55 @@ body.night canvas {
   }
 }
 
+.chart-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.chart-wrapper {
+  width: 50%;
+}
+
+.weather-box {
+  width: 40%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.weather-box h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+#weather-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#weather-table td {
+  padding: 6px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+#weather-table td:first-child {
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .chart-row {
+    flex-direction: column;
+  }
+
+  .chart-wrapper,
+  .weather-box {
+    width: 100%;
+  }
+}
 
 

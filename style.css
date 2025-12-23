@@ -117,7 +117,7 @@ body.night canvas {
 
 .chart-wrapper {
   width: 50%;
-  max-width: 600px;
+  max-width: 300px;
 }
 
 /* Ensure canvas respects wrapper */

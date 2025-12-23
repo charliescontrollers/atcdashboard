@@ -113,4 +113,10 @@ body.night canvas {
   background: transparent;
 }
 
+#table-container table {
+  width: 50%;
+  max-width: 600px;
+}
+
+
 

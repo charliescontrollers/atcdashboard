@@ -251,3 +251,33 @@ function renderWeatherTable(weather) {
   `;
 }
 
+function loadNOTAMs() {
+  const script = document.createElement("script");
+  script.src =
+    "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec" +
+    "?action=notams&callback=handleNOTAMs";
+  document.body.appendChild(script);
+}
+
+function handleNOTAMs(data) {
+  const box = document.getElementById("notam-list");
+  if (!box || !data.notams || data.notams.length === 0) {
+    box.innerHTML = "<div>No NOTAMs for today</div>";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  data.notams.forEach(n => {
+    const div = document.createElement("div");
+    div.className = "notam " + n.type;
+    div.innerText = n.text;
+    box.appendChild(div);
+  });
+}
+
+// Load once + refresh every 30 min
+loadNOTAMs();
+setInterval(loadNOTAMs, 1800000);
+
+

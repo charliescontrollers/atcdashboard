@@ -65,8 +65,15 @@ function loadTodayData() {
 }
 
 function handleToday(response) {
+  console.log("TODAY RESPONSE:", response);
+
   const box = document.getElementById("table-container");
-  if (!box || !response || !response.data) return;
+  if (!box) return;
+
+  if (!response || !response.data) {
+    box.innerHTML = "No data available";
+    return;
+  }
 
   let html = "<table>";
   response.data.forEach(row => {
@@ -80,6 +87,7 @@ function handleToday(response) {
 
   box.innerHTML = html;
 }
+
 
 /* =========================
    VISIBILITY (JSONP)

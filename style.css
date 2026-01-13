@@ -1,63 +1,52 @@
 :root {
-  --bg-main: #f4f7fb;
-  --card-bg: #ffffff;
-  --border-light: #e1e5ea;
-  --text-primary: #222;
-  --text-muted: #666;
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --border: #e1e5ea;
+  --text: #222;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   padding: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-main);
-  color: var(--text-primary);
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-h1 {
-  margin-top: 0;
-}
+h1 { margin-top: 0; }
 
 /* ===================== */
-/* OPS ROW (UNIT + NOTAM) */
+/* LAYOUT ROWS */
 /* ===================== */
-.ops-row {
+.ops-row,
+.chart-row {
   display: flex;
   gap: 16px;
-  align-items: flex-start;
   margin-bottom: 20px;
 }
 
+/* ===================== */
+/* BOXES */
+/* ===================== */
 .unit-box,
-.notam-box {
-  background: var(--card-bg);
-  border: 1px solid var(--border-light);
+.notam-box,
+.weather-box {
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px;
 }
 
-.unit-box {
-  width: 55%;
-}
+.unit-box { width: 55%; }
+.notam-box { width: 45%; max-height: 420px; overflow-y: auto; }
 
-.notam-box {
-  width: 45%;
-  max-height: 420px;
-  overflow-y: auto;
-}
-
-.unit-box h3,
-.notam-box h3 {
-  margin: 0 0 8px 0;
-  font-size: 16px;
-}
+.chart-wrapper { width: 55%; }
+.weather-box { width: 45%; }
 
 /* ===================== */
-/* NOTAM STYLES */
+/* NOTAMS */
 /* ===================== */
 .notam {
   font-size: 13px;
@@ -67,50 +56,32 @@ h1 {
   white-space: pre-wrap;
 }
 
-.notam.RUNWAY { background: #fee2e2; }
-.notam.TAXIWAY { background: #fef3c7; }
-.notam.NAV { background: #e0f2fe; }
-.notam.APRON { background: #dcfce7; }
-.notam.GENERAL { background: #f1f5f9; }
-
-.placeholder {
-  font-size: 13px;
-  color: var(--text-muted);
-}
+.notam.RUNWAY { background:#fee2e2; }
+.notam.TAXIWAY { background:#fef3c7; }
+.notam.NAV { background:#e0f2fe; }
+.notam.APRON { background:#dcfce7; }
+.notam.GENERAL { background:#f1f5f9; }
 
 /* ===================== */
-/* CHART + WEATHER ROW */
+/* CHART */
 /* ===================== */
-.chart-row {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.chart-wrapper {
-  width: 55%;
-}
-
 .chart-wrapper canvas {
   width: 100% !important;
   height: 300px !important;
 }
 
-.weather-box {
-  width: 45%;
-  background: var(--card-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 14px;
+#trend-arrow {
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.weather-box h3 {
-  margin: 0 0 8px 0;
+#vis-meta {
+  font-size: 13px;
+  color: #555;
 }
 
 /* ===================== */
-/* WEATHER TABLE */
+/* WEATHER */
 /* ===================== */
 #weather-table {
   width: 100%;
@@ -119,7 +90,7 @@ h1 {
 
 #weather-table td {
   padding: 6px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 #weather-table td:first-child {
@@ -140,21 +111,6 @@ h1 {
 }
 
 /* ===================== */
-/* META + TREND */
-/* ===================== */
-#vis-meta {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-
-#trend-arrow {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-/* ===================== */
 /* MOBILE */
 /* ===================== */
 @media (max-width: 768px) {
@@ -169,19 +125,4 @@ h1 {
   .weather-box {
     width: 100%;
   }
-}
-
-/* ===================== */
-/* NIGHT MODE */
-/* ===================== */
-body.night {
-  background: #020617;
-  color: #e5e7eb;
-}
-
-body.night .unit-box,
-body.night .notam-box,
-body.night .weather-box {
-  background: #020617;
-  border-color: #1e293b;
 }

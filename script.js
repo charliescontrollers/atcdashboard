@@ -1,3 +1,6 @@
+/* =========================
+   NIGHT MODE
+========================= */
 function applyNightMode() {
   const hour = new Date().getUTCHours();
   if (hour >= 18 || hour <= 6) {
@@ -7,16 +10,24 @@ function applyNightMode() {
   }
 }
 
-
+/* =========================
+   GLOBAL FLAGS
+========================= */
 let lowVisAlertPlayed = false;
 
-
+/* =========================
+   VISIBILITY COLOR LOGIC
+========================= */
 function colorForValue(v) {
   if (v >= 5000) return "#16A34A";   // green
   if (v >= 3000) return "#2563EB";   // blue
   if (v >= 2500) return "#EAB308";   // yellow
   return "#DC2626";                  // red
 }
+
+/* =========================
+   CAT BANDS PLUGIN
+========================= */
 const catBandsPlugin = {
   id: "catBands",
   beforeDraw(chart) {
@@ -43,197 +54,155 @@ const catBandsPlugin = {
   }
 };
 
+/* =========================
+   UNIT DISTRIBUTION (JSONP)
+========================= */
+function loadTodayData() {
+  const s = document.createElement("script");
+  s.src =
+    "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec" +
+    "?action=today&callback=handleToday";
+  document.body.appendChild(s);
+}
 
+function handleToday(response) {
+  const box = document.getElementById("table-container");
+  if (!box || !response || !response.data) return;
 
-// ==============================
-// DAILY UNIT DISTRIBUTION TABLE
-// ==============================
-
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec?action=today";
-
-fetch(API_URL)
-  .then(res => res.json())
-  .then(showData)
-  .catch(err => {
-    document.getElementById("table-container").innerHTML =
-      "Error loading data";
-    console.error(err);
-  });
-
-function showData(response) {
-  document.getElementById("date").innerText =
-    "Date: " + response.date;
-
-  const data = response.data;
   let html = "<table>";
-
-  data.forEach(row => {
+  response.data.forEach(row => {
     html += "<tr>";
     row.forEach(cell => {
       html += `<td>${cell || ""}</td>`;
     });
     html += "</tr>";
   });
-
   html += "</table>";
-  document.getElementById("table-container").innerHTML = html;
+
+  box.innerHTML = html;
 }
 
-
-// ==============================
-// VISIBILITY GRAPH (TAF BASED)
-// ==============================
-
-function colorForValue(v) {
-  if (v >= 5000) return "#16A34A";
-  if (v >= 3000) return "#2563EB";
-  if (v >= 2500) return "#EAB308";
-  return "#DC2626";
+/* =========================
+   VISIBILITY (JSONP)
+========================= */
+function loadVisibility() {
+  const s = document.createElement("script");
+  s.src =
+    "https://script.google.com/macros/s/AKfycbzVOjnnQgXMrcfaUrF77v9knWOtkFUfG2lXWnFfuesH6I7Aes6tZT5F1zBaqOzCdMhB/exec" +
+    "?action=visibility&callback=handleVisibility";
+  document.body.appendChild(s);
 }
 
+function handleVisibility(data) {
+  if (!data || !data.series) return;
+  drawVisibility(data);
+}
+
+/* =========================
+   DRAW VISIBILITY CHART
+========================= */
 function drawVisibility(data) {
   renderWeatherTable(data.weather);
-  const meta = document.getElementById("vis-meta");
-meta.innerText =
-  `Source: ${data.source}` +
-  (data.issueTime ? ` | Issued: ${data.issueTime} UTC` : "");
 
-  if (!data.series || data.series.length === 0) return;
+  const meta = document.getElementById("vis-meta");
+  if (meta) {
+    meta.innerText =
+      `Source: ${data.source}` +
+      (data.issueTime ? ` | Issued: ${data.issueTime} UTC` : "");
+  }
+
+  if (!data.series.length) return;
 
   const times = data.series.map(p => p.time);
   const values = data.series.map(p => Number(p.vis));
 
-  // ---- LOW VIS ALERT ----
- const alertBox = document.getElementById("vis-alert");
-const sound = document.getElementById("lowVisSound");
-
-if (values[0] < 800) {
-  alertBox.innerText = `⚠ LOW VISIBILITY: ${values[0]} m`;
-  alertBox.style.display = "block";
+  /* ---- TREND ---- */
   const trendBox = document.getElementById("trend-arrow");
-
-if (values.length >= 2) {
-  const diff = values[0] - values[1];
-
-  if (diff > 100) {
-    trendBox.innerText = "📉 Falling visibility";
-    trendBox.style.color = "#DC2626";
-  } else if (diff < -100) {
-    trendBox.innerText = "📈 Improving visibility";
-    trendBox.style.color = "#16A34A";
-  } else {
-    trendBox.innerText = "➡ Stable visibility";
-    trendBox.style.color = "#64748B";
+  if (trendBox && values.length >= 2) {
+    const diff = values[0] - values[1];
+    if (diff > 100) {
+      trendBox.innerText = "📉 Falling visibility";
+      trendBox.style.color = "#DC2626";
+    } else if (diff < -100) {
+      trendBox.innerText = "📈 Improving visibility";
+      trendBox.style.color = "#16A34A";
+    } else {
+      trendBox.innerText = "➡ Stable visibility";
+      trendBox.style.color = "#64748B";
+    }
   }
-}
 
+  /* ---- LOW VIS ALERT ---- */
+  const alertBox = document.getElementById("vis-alert");
+  const sound = document.getElementById("lowVisSound");
 
-  if (!lowVisAlertPlayed) {
-    sound.play().catch(() => {});
-    lowVisAlertPlayed = true;
+  if (alertBox && values[0] < 800) {
+    alertBox.innerText = `⚠ LOW VISIBILITY: ${values[0]} m`;
+    alertBox.style.display = "block";
+    if (!lowVisAlertPlayed && sound) {
+      sound.play().catch(() => {});
+      lowVisAlertPlayed = true;
+    }
+  } else if (alertBox) {
+    alertBox.style.display = "none";
+    lowVisAlertPlayed = false;
   }
-} else {
-  alertBox.style.display = "none";
-  lowVisAlertPlayed = false;
-}
 
+  /* ---- RAW TAF ---- */
+  const tafBox = document.getElementById("taf-box");
+  if (tafBox && data.raw) tafBox.innerText = data.raw;
 
-  // ---- RAW TAF DISPLAY ----
-const tafBox = document.getElementById("taf-box");
-if (tafBox && data.raw) {
-  tafBox.innerText = data.raw;
-}
+  /* ---- CHART ---- */
+  const canvas = document.getElementById("visibilityChart");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
 
+  if (window.visChart) window.visChart.destroy();
 
-  const ctx = document
-    .getElementById("visibilityChart")
-    .getContext("2d");
-
-  if (!window.visChart) {
-    window.visChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: times,
-        datasets: [{
-          label: "Visibility (m)",
-          data: values,
-          tension: 0.3,
-          pointRadius: 4,
-          pointBackgroundColor: values.map(colorForValue),
-          segment: {
-            borderColor: ctx => {
-              const y = ctx.p0.parsed.y;
-              if (y >= 5000) return "#16A34A";
-              if (y >= 3000) return "#2563EB";
-              if (y >= 2500) return "#EAB308";
-              return "#DC2626";
-            }
-          }
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: { mode: "index", intersect: false },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: c => `${c.parsed.y} m`
-            }
-          }
-        },
-        scales: {
-          y: {
-            min: 0,
-            max: 10000,
-            title: { display: true, text: "Visibility (meters)" }
-          },
-          x: {
-            title: { display: true, text: "UTC Time" }
+  window.visChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: times,
+      datasets: [{
+        label: "Visibility (m)",
+        data: values,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: values.map(colorForValue),
+        segment: {
+          borderColor: c => colorForValue(c.p0.parsed.y)
+        }
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: c => `${c.parsed.y} m`
           }
         }
       },
-      plugins: [catBandsPlugin]
-    });
-  } else {
-    window.visChart.data.labels = times;
-    window.visChart.data.datasets[0].data = values;
-    window.visChart.update();
-  }
+      scales: {
+        y: {
+          min: 0,
+          max: 10000,
+          title: { display: true, text: "Visibility (m)" }
+        },
+        x: {
+          title: { display: true, text: "UTC Time" }
+        }
+      }
+    },
+    plugins: [catBandsPlugin]
+  });
 }
 
-
-
-// ==============================
-// FETCH VISIBILITY DATA
-// ==============================
-
-
-
-function loadVisibility() {
-  const script = document.createElement("script");
-  script.src =
-    "https://script.google.com/macros/s/AKfycbzVOjnnQgXMrcfaUrF77v9knWOtkFUfG2lXWnFfuesH6I7Aes6tZT5F1zBaqOzCdMhB/exec" + "?action=visibility&callback=handleVisibility";
-
-  document.body.appendChild(script);
-}
-
-// JSONP callback (called by Apps Script)
-function handleVisibility(data) {
-  drawVisibility(data);
-}
-
-// Load once + refresh every 10 min
-loadVisibility();
-setInterval(loadVisibility, 600000);
-
-
-loadVisibility();
-setInterval(loadVisibility, 600000); // 10 minutes
-
-applyNightMode();
-
+/* =========================
+   WEATHER TABLE
+========================= */
 function renderWeatherTable(weather) {
   const table = document.getElementById("weather-table");
   if (!table || !weather) {
@@ -251,23 +220,27 @@ function renderWeatherTable(weather) {
   `;
 }
 
+/* =========================
+   NOTAMS (JSONP)
+========================= */
 function loadNOTAMs() {
-  const script = document.createElement("script");
-  script.src =
+  const s = document.createElement("script");
+  s.src =
     "https://script.google.com/macros/s/AKfycbxmS12SwrUcJ0TakuffxlrIfKA33ERUVXh58GgZNky6lTaKlTxhlFnKEmJMmw4yliGG/exec" +
     "?action=notams&callback=handleNOTAMs";
-  document.body.appendChild(script);
+  document.body.appendChild(s);
 }
 
 function handleNOTAMs(data) {
   const box = document.getElementById("notam-list");
-  if (!box || !data.notams || data.notams.length === 0) {
+  if (!box || !data || !data.notams) return;
+
+  if (!data.notams.length) {
     box.innerHTML = "<div>No NOTAMs for today</div>";
     return;
   }
 
   box.innerHTML = "";
-
   data.notams.forEach(n => {
     const div = document.createElement("div");
     div.className = "notam " + n.type;
@@ -276,8 +249,13 @@ function handleNOTAMs(data) {
   });
 }
 
-// Load once + refresh every 30 min
+/* =========================
+   INIT
+========================= */
+applyNightMode();
+loadTodayData();
+loadVisibility();
 loadNOTAMs();
-setInterval(loadNOTAMs, 1800000);
 
-
+setInterval(loadVisibility, 600000);   // 10 min
+setInterval(loadNOTAMs, 1800000);      // 30 min

@@ -263,14 +263,15 @@ function loadNOTAMs() {
 
 function handleNOTAMs(data) {
   const box = document.getElementById("notam-list");
-  if (!box || !data || !data.notams) return;
+  if (!box) return;
 
-  if (data.notams.length === 0) {
-    box.innerHTML = "<div>No NOTAMs for today</div>";
+  // Safety checks
+  if (!data || !data.notams || data.notams.length === 0) {
+    box.innerHTML = "<div class='notam-empty'>No NOTAMs for today</div>";
     return;
   }
 
-  // Group by type
+  // Group NOTAMs by type
   const groups = {};
   data.notams.forEach(n => {
     if (!groups[n.type]) groups[n.type] = [];
@@ -279,19 +280,23 @@ function handleNOTAMs(data) {
 
   box.innerHTML = "";
 
+  // Render each NOTAM group
   Object.keys(groups).forEach(type => {
     // Section header
-    const header = document.createElement("div");
-    header.className = "notam-section";
-    header.innerText = type;
-    box.appendChild(header);
+    const sectionHeader = document.createElement("div");
+    sectionHeader.className = "notam-section";
+    sectionHeader.innerText = type;
+    box.appendChild(sectionHeader);
 
+    // Each NOTAM under the section
     groups[type].forEach(n => {
       const div = document.createElement("div");
-      div.className =
-        "notam " +
-        type +
-        (n.expiring ? " notam-expiring" : "");
+
+      let classes = "notam";
+      if (n.expiring) classes += " notam-expiring";
+      if (n.runway) classes += " notam-runway";
+
+      div.className = classes;
 
       div.innerHTML = `
         <div class="notam-text">${n.text}</div>

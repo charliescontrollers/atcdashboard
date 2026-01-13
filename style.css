@@ -182,6 +182,18 @@ body.night canvas {
   }
 }
 
+
+@media (max-width: 768px) {
+  .ops-row {
+    flex-direction: column;
+  }
+
+  .unit-box,
+  .notam-box {
+    width: 100%;
+  }
+}
+
 .ops-row {
   display: flex;
   gap: 16px;

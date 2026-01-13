@@ -1,233 +1,64 @@
-/* ===============================
-   GLOBAL THEME VARIABLES
-   =============================== */
 :root {
-  --bg-main: #F4F7FB;
-  --card-bg: #FFFFFF;
-  --border-light: #E1E5EA;
-  --text-primary: #222222;
-  --text-muted: #666666;
+  --bg-main: #f4f7fb;
+  --card-bg: #ffffff;
+  --border-light: #e1e5ea;
+  --text-primary: #222;
+  --text-muted: #666;
 }
 
-/* ===============================
-   BASE RESET
-   =============================== */
 * {
   box-sizing: border-box;
 }
 
-/* ===============================
-   BODY
-   =============================== */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;
-}
-
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-main);
+  margin: 0;
+  padding: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-main);
   color: var(--text-primary);
 }
 
-/* ===============================
-   PAGE LAYOUT
-   =============================== */
 h1 {
-  margin-bottom: 6px;
+  margin-top: 0;
 }
 
-#date {
-  color: var(--text-muted);
-  margin-bottom: 16px;
-}
-
-/* ===============================
-   CARD CONTAINER
-   =============================== */
-.card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
-/* ===============================
-   TABLE STYLING
-   =============================== */
-
-#table-container table {
-  width: 50%;
-  max-width: 600px;
-}
-
-
-
-td {
-  border: 1px solid var(--border-light);
-  padding: 8px;
-  font-size: 14px;
-}
-
-/* ===============================
-   RESPONSIVE HELPERS
-   =============================== */
-.table-wrapper {
-  overflow-x: auto;
-}
-
-/* ===============================
-   DEBUG (REMOVE LATER)
-   =============================== */
-/* Uncomment to visually confirm CSS is loading */
-/*
-body {
-  outline: 5px solid red;
-}
-*/
-
-.card canvas {
-  width: 100% !important;
-  height: 300px !important;
-}
-
-@media (max-width: 768px) {
-  .card canvas {
-    height: 220px !important;
-  }
-}
-
-body.night {
-  background: #020617;
-  color: #e5e7eb;
-}
-
-body.night .card,
-body.night table {
-  background: #020617;
-  border-color: #1e293b;
-}
-
-body.night canvas {
-  background: transparent;
-}
-
-.chart-wrapper {
-  width: 50%;
-  max-width: 600px;
-}
-
-/* Ensure canvas respects wrapper */
-.chart-wrapper canvas {
-  width: 100% !important;
-  height: 300px !important;
-}
-@media (max-width: 768px) {
-  .chart-wrapper {
-    width: 100%;
-  }
-}
-
-.chart-row {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.chart-wrapper {
-  width: 50%;
-}
-
-.weather-box {
-  width: 40%;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 14px;
-}
-
-.weather-box h3 {
-  margin: 0 0 8px 0;
-  font-size: 16px;
-}
-
-#weather-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-#weather-table td {
-  padding: 6px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-#weather-table td:first-child {
-  font-weight: 600;
-  color: #334155;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .chart-row {
-    flex-direction: column;
-  }
-
-  .chart-wrapper,
-  .weather-box {
-    width: 100%;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .ops-row {
-    flex-direction: column;
-  }
-
-  .unit-box,
-  .notam-box {
-    width: 100%;
-  }
-}
-
+/* ===================== */
+/* OPS ROW (UNIT + NOTAM) */
+/* ===================== */
 .ops-row {
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  margin-bottom: 20px;
 }
 
-/* Unit distribution */
+.unit-box,
+.notam-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px;
+}
+
 .unit-box {
   width: 55%;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 10px;
 }
 
-/* NOTAM panel */
 .notam-box {
   width: 45%;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 10px;
   max-height: 420px;
   overflow-y: auto;
 }
 
-/* Headings */
 .unit-box h3,
 .notam-box h3 {
   margin: 0 0 8px 0;
   font-size: 16px;
 }
 
-/* NOTAM styling (reuse from before) */
+/* ===================== */
+/* NOTAM STYLES */
+/* ===================== */
 .notam {
   font-size: 13px;
   padding: 8px;
@@ -242,3 +73,115 @@ body.night canvas {
 .notam.APRON { background: #dcfce7; }
 .notam.GENERAL { background: #f1f5f9; }
 
+.placeholder {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ===================== */
+/* CHART + WEATHER ROW */
+/* ===================== */
+.chart-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.chart-wrapper {
+  width: 55%;
+}
+
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+.weather-box {
+  width: 45%;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.weather-box h3 {
+  margin: 0 0 8px 0;
+}
+
+/* ===================== */
+/* WEATHER TABLE */
+/* ===================== */
+#weather-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#weather-table td {
+  padding: 6px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+#weather-table td:first-child {
+  font-weight: 600;
+}
+
+/* ===================== */
+/* TAF BOX */
+/* ===================== */
+#taf-box {
+  margin-top: 10px;
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+/* ===================== */
+/* META + TREND */
+/* ===================== */
+#vis-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+#trend-arrow {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* ===================== */
+/* MOBILE */
+/* ===================== */
+@media (max-width: 768px) {
+  .ops-row,
+  .chart-row {
+    flex-direction: column;
+  }
+
+  .unit-box,
+  .notam-box,
+  .chart-wrapper,
+  .weather-box {
+    width: 100%;
+  }
+}
+
+/* ===================== */
+/* NIGHT MODE */
+/* ===================== */
+body.night {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+body.night .unit-box,
+body.night .notam-box,
+body.night .weather-box {
+  background: #020617;
+  border-color: #1e293b;
+}

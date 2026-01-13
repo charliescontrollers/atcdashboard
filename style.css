@@ -131,27 +131,36 @@ h1 { margin-top: 0; }
    UNIT DISTRIBUTION
 ===================== */
 
+/* =========================
+   UNIT DISTRIBUTION TABLE
+========================= */
+
 .unit-table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .unit-table td {
-  padding: 6px 8px;
+  padding: 6px 10px;
   font-size: 14px;
 }
 
 /* Unit header row */
 .unit-header td {
   font-weight: bold;
-  background: #f1f5f9;
-  border-top: 2px solid #334155;
+  background: #e5e7eb;
+  border-left: 5px solid #334155;
 }
 
-/* Separator line */
-.unit-separator td {
+/* Person rows */
+.unit-person td {
+  background: #ffffff;
+}
+
+/* Thick separator between units */
+.unit-divider td {
   padding: 0;
-  height: 8px;
-  border-bottom: 2px solid #94a3b8;
+  height: 10px;
+  border-bottom: 3px solid #0f172a; /* VERY visible */
 }
 

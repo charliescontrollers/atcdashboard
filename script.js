@@ -265,19 +265,44 @@ function handleNOTAMs(data) {
   const box = document.getElementById("notam-list");
   if (!box || !data || !data.notams) return;
 
-  if (!data.notams.length) {
+  if (data.notams.length === 0) {
     box.innerHTML = "<div>No NOTAMs for today</div>";
     return;
   }
 
-  box.innerHTML = "";
+  // Group by type
+  const groups = {};
   data.notams.forEach(n => {
-    const div = document.createElement("div");
-    div.className = "notam " + n.type;
-    div.innerText = n.text;
-    box.appendChild(div);
+    if (!groups[n.type]) groups[n.type] = [];
+    groups[n.type].push(n);
+  });
+
+  box.innerHTML = "";
+
+  Object.keys(groups).forEach(type => {
+    // Section header
+    const header = document.createElement("div");
+    header.className = "notam-section";
+    header.innerText = type;
+    box.appendChild(header);
+
+    groups[type].forEach(n => {
+      const div = document.createElement("div");
+      div.className =
+        "notam " +
+        type +
+        (n.expiring ? " notam-expiring" : "");
+
+      div.innerHTML = `
+        <div class="notam-text">${n.text}</div>
+        <div class="notam-validity">${n.validity}</div>
+      `;
+
+      box.appendChild(div);
+    });
   });
 }
+
 
 /* =========================
    INIT

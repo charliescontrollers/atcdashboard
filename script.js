@@ -60,8 +60,7 @@ const catBandsPlugin = {
 function loadTodayData() {
   const s = document.createElement("script");
   s.src =
-    "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec" +
-    "?action=today&callback=handleToday";
+    "https://script.google.com/macros/s/AKfycbwgItqRIUEf4tuBiCQIVASEkVdNIOXmVo_arYDV8oC0AX21qESl9SOe_jXZu4flL-pa/exec?action=today&callback=handleToday";
   document.body.appendChild(s);
 }
 

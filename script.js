@@ -73,37 +73,35 @@ function handleToday(response) {
     return;
   }
 
+  const units = ["WSO", "RADAR", "PLC", "TWR", "ARO", "FMP", "CMD", "UNUSED"];
+
   let html = "<table class='unit-table'>";
 
   response.data.forEach((row, i) => {
-    const cellA = (row[0] || "").toString().trim().toUpperCase();
+    const colA = (row[0] || "").toString().trim().toUpperCase();
+    const isUnitHeader = units.includes(colA);
 
-    // Detect UNIT headers
-    const isUnit =
-      ["WSO", "RADAR", "PLC", "TWR", "ARO", "FMP/ACC ALPHA", "CMD/ACC ALPHA", "TWR ALPHA"]
-        .includes(cellA);
+    if (isUnitHeader) {
+      // Add separator BEFORE every unit except the first
+      if (i !== 0) {
+        html += `
+          <tr class="unit-divider">
+            <td colspan="2"></td>
+          </tr>
+        `;
+      }
 
-    if (isUnit) {
-      // Unit title row
       html += `
         <tr class="unit-header">
-          <td colspan="2">${cellA}</td>
+          <td>${colA}</td>
+          <td>${row[1] || ""}</td>
         </tr>
       `;
     } else {
-      // Normal person row
-      html += "<tr>";
-      row.forEach(cell => {
-        html += `<td>${cell || ""}</td>`;
-      });
-      html += "</tr>";
-    }
-
-    // Add separator after each unit block
-    if (isUnit) {
       html += `
-        <tr class="unit-separator">
-          <td colspan="2"></td>
+        <tr class="unit-person">
+          <td></td>
+          <td>${row[1] || ""}</td>
         </tr>
       `;
     }

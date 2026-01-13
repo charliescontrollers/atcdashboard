@@ -1,100 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Today's Unit Distribution</title>
+  <meta charset="UTF-8" />
+  <title>ATC Ops Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicon (silences 404) -->
+  <link rel="icon" href="data:,">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<link rel="icon" href="data:,">
 
-<h1>Today's Unit Distribution</h1>
-<p id="date"></p>
+  <h1>ATC Operations Dashboard</h1>
 
-<div class="ops-row">
+  <!-- ===================== -->
+  <!-- UNIT + NOTAM ROW -->
+  <!-- ===================== -->
+  <div class="ops-row">
 
-  <!-- Unit Distribution -->
-  <div class="unit-box">
-    <h3>Unit Distribution (Today)</h3>
-    <div id="table-container"></div>
+    <!-- Unit Distribution -->
+    <div class="unit-box">
+      <h3>Unit Distribution (Today)</h3>
+      <div id="table-container">
+        <!-- populated by script.js -->
+      </div>
+    </div>
+
+    <!-- NOTAMs -->
+    <div class="notam-box">
+      <h3>NOTAMs (Today)</h3>
+      <div id="notam-list">
+        <div class="placeholder">Loading NOTAMs…</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- NOTAMs -->
-  <div class="notam-box">
-    <h3>NOTAMs (Today)</h3>
-    <div id="notam-list"></div>
-  </div>
-
-</div>
-
-  
-  <div class="card">
-  <h2>Bengaluru Airport Visibility (VOBL)</h2>
-    <!-- LOW VISIBILITY ALERT -->
-<div id="vis-alert"
-     style="
-       display:none;
-       background:#DC2626;
-       color:white;
-       padding:8px;
-       font-weight:bold;
-       border-radius:6px;
-       margin-bottom:8px;">
-</div>
-
-    <div id="trend-arrow" style="
-  font-size:24px;
-  font-weight:bold;
-  margin-bottom:6px;">
-</div>
-    
-    <div id="vis-meta" style="
-  font-size:13px;
-  color:#64748b;
-  margin-bottom:6px;">
-</div>
-
-
+  <!-- ===================== -->
+  <!-- VISIBILITY SECTION -->
+  <!-- ===================== -->
   <div class="chart-row">
 
-  <!-- Chart -->
-  <div class="chart-wrapper">
-    <canvas id="visibilityChart"></canvas>
-    <pre id="taf-box"></pre>
+    <div class="chart-wrapper">
+      <div id="trend-arrow"></div>
+      <div id="vis-meta"></div>
+
+      <canvas id="visibilityChart"></canvas>
+
+      <pre id="taf-box"></pre>
+    </div>
+
+    <div class="weather-box">
+      <h3>Current Weather</h3>
+      <table id="weather-table"></table>
+    </div>
+
   </div>
 
-  <!-- Weather Table -->
-  <div class="weather-box">
-    <h3>Current Weather</h3>
-    <table id="weather-table"></table>
-  </div>
-
-</div>
-
-
-    <!-- RAW TAF DISPLAY -->
-<pre id="taf-box"
-     style="
-       margin-top:10px;
-       background:#0f172a;
-       color:#e5e7eb;
-       padding:10px;
-       border-radius:6px;
-       font-size:12px;
-       white-space:pre-wrap;">
-</pre>
-
-
-</div>
-  
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="script.js?v=20240930"></script>
-
-
-
-  <audio id="lowVisSound">
-  <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-</audio>
+  <!-- ===================== -->
+  <!-- SCRIPTS -->
+  <!-- ===================== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js?v=20241001"></script>
 
 </body>
 </html>

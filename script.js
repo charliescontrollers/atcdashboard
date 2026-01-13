@@ -254,7 +254,7 @@ function renderWeatherTable(weather) {
 function loadNOTAMs() {
   const script = document.createElement("script");
   script.src =
-    "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec" +
+    "https://script.google.com/macros/s/AKfycbxmS12SwrUcJ0TakuffxlrIfKA33ERUVXh58GgZNky6lTaKlTxhlFnKEmJMmw4yliGG/exec" +
     "?action=notams&callback=handleNOTAMs";
   document.body.appendChild(script);
 }

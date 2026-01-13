@@ -65,8 +65,6 @@ function loadTodayData() {
 }
 
 function handleToday(response) {
-  console.log("TODAY RESPONSE:", response);
-
   const box = document.getElementById("table-container");
   if (!box) return;
 
@@ -75,16 +73,43 @@ function handleToday(response) {
     return;
   }
 
-  let html = "<table>";
-  response.data.forEach(row => {
-    html += "<tr>";
-    row.forEach(cell => {
-      html += `<td>${cell || ""}</td>`;
-    });
-    html += "</tr>";
-  });
-  html += "</table>";
+  let html = "<table class='unit-table'>";
 
+  response.data.forEach((row, i) => {
+    const cellA = (row[0] || "").toString().trim().toUpperCase();
+
+    // Detect UNIT headers
+    const isUnit =
+      ["WSO", "RADAR", "PLC", "TWR", "ARO", "FMP/ACC ALPHA", "CMD/ACC ALPHA", "TWR ALPHA"]
+        .includes(cellA);
+
+    if (isUnit) {
+      // Unit title row
+      html += `
+        <tr class="unit-header">
+          <td colspan="2">${cellA}</td>
+        </tr>
+      `;
+    } else {
+      // Normal person row
+      html += "<tr>";
+      row.forEach(cell => {
+        html += `<td>${cell || ""}</td>`;
+      });
+      html += "</tr>";
+    }
+
+    // Add separator after each unit block
+    if (isUnit) {
+      html += `
+        <tr class="unit-separator">
+          <td colspan="2"></td>
+        </tr>
+      `;
+    }
+  });
+
+  html += "</table>";
   box.innerHTML = html;
 }
 

@@ -182,4 +182,51 @@ body.night canvas {
   }
 }
 
+.ops-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Unit distribution */
+.unit-box {
+  width: 55%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* NOTAM panel */
+.notam-box {
+  width: 45%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+/* Headings */
+.unit-box h3,
+.notam-box h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+/* NOTAM styling (reuse from before) */
+.notam {
+  font-size: 13px;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  white-space: pre-wrap;
+}
+
+.notam.RUNWAY { background: #fee2e2; }
+.notam.TAXIWAY { background: #fef3c7; }
+.notam.NAV { background: #e0f2fe; }
+.notam.APRON { background: #dcfce7; }
+.notam.GENERAL { background: #f1f5f9; }
 

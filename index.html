@@ -5,66 +5,57 @@
   <title>ATC Ops Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon (silences 404) -->
+  <!-- Silence favicon 404 -->
   <link rel="icon" href="data:,">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <h1>ATC Operations Dashboard</h1>
+<h1>ATC Operations Dashboard</h1>
 
-  <!-- ===================== -->
-  <!-- UNIT + NOTAM ROW -->
-  <!-- ===================== -->
-  <div class="ops-row">
+<!-- ===================== -->
+<!-- UNIT + NOTAM ROW -->
+<!-- ===================== -->
+<div class="ops-row">
 
-    <!-- Unit Distribution -->
-    <div class="unit-box">
-      <h3>Unit Distribution (Today)</h3>
-      <div id="table-container">
-        <!-- populated by script.js -->
-      </div>
-    </div>
-
-    <!-- NOTAMs -->
-    <div class="notam-box">
-      <h3>NOTAMs (Today)</h3>
-      <div id="notam-list">
-        <div class="placeholder">Loading NOTAMs…</div>
-      </div>
-    </div>
-
+  <div class="unit-box">
+    <h3>Unit Distribution (Today)</h3>
+    <div id="table-container">Loading…</div>
   </div>
 
-  <!-- ===================== -->
-  <!-- VISIBILITY SECTION -->
-  <!-- ===================== -->
-  <div class="chart-row">
-
-    <div class="chart-wrapper">
-      <div id="trend-arrow"></div>
-      <div id="vis-meta"></div>
-
-      <canvas id="visibilityChart"></canvas>
-
-      <pre id="taf-box"></pre>
-    </div>
-
-    <div class="weather-box">
-      <h3>Current Weather</h3>
-      <table id="weather-table"></table>
-    </div>
-
+  <div class="notam-box">
+    <h3>NOTAMs (Today)</h3>
+    <div id="notam-list">Loading NOTAMs…</div>
   </div>
 
-  <!-- ===================== -->
-  <!-- SCRIPTS -->
-  <!-- ===================== -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js?v=20241001"></script>
+</div>
+
+<!-- ===================== -->
+<!-- VISIBILITY + WEATHER -->
+<!-- ===================== -->
+<div class="chart-row">
+
+  <div class="chart-wrapper">
+    <div id="trend-arrow"></div>
+    <div id="vis-meta"></div>
+    <canvas id="visibilityChart"></canvas>
+    <pre id="taf-box"></pre>
+  </div>
+
+  <div class="weather-box">
+    <h3>Current Weather</h3>
+    <table id="weather-table"></table>
+  </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- SCRIPTS -->
+<!-- ===================== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js?v=20241001"></script>
 
 </body>
 </html>

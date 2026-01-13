@@ -73,7 +73,7 @@ function handleToday(response) {
     return;
   }
 
-  const units = ["WSO", "RADAR", "PLC", "TWR", "ARO", "FMP", "CMD", "UNUSED"];
+  const units = ["WSO", "RADAR", "PLC", "TWR", "ARO", "FMP/ACC ALPHA", "CMD/ACC ALPHA", "TWR ALPHA"];
 
   let html = "<table class='unit-table'>";
 

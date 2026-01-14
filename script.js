@@ -60,7 +60,7 @@ const catBandsPlugin = {
 function loadTodayData() {
   const s = document.createElement("script");
   s.src =
-    "https://script.google.com/macros/s/AKfycby8LijOFrszB9tlT8dVDj44BZWiG0iJPLektDUXyjetj6JYtkjs2QsXzCTABkkCz9yy/exec?action=today&callback=handleToday";
+    "https://script.google.com/macros/s/AKfycbyBxIase-cainOGmUnhwq3UcHOQmL6_dg3DtDJRQ3iDTt3dK0SLCPd5xEZQ-zrgThP_/exec?action=today&callback=handleToday";
   document.body.appendChild(s);
 }
 
@@ -118,7 +118,7 @@ function handleToday(response) {
 function loadVisibility() {
   const s = document.createElement("script");
   s.src =
-    "https://script.google.com/macros/s/AKfycby8LijOFrszB9tlT8dVDj44BZWiG0iJPLektDUXyjetj6JYtkjs2QsXzCTABkkCz9yy/exec" +
+    "https://script.google.com/macros/s/AKfycbyBxIase-cainOGmUnhwq3UcHOQmL6_dg3DtDJRQ3iDTt3dK0SLCPd5xEZQ-zrgThP_/exec" +
     "?action=visibility&callback=handleVisibility";
   document.body.appendChild(s);
 }
@@ -256,7 +256,7 @@ function renderWeatherTable(weather) {
 function loadNOTAMs() {
   const s = document.createElement("script");
   s.src =
-    "https://script.google.com/macros/s/AKfycby5GJrYMxK8Tvel5hl9HyWnfDHzV9PdSRFP4MB87TEB5RAU1cgr1AqSlEyIL7S4yZlA/exec" +
+    "https://script.google.com/macros/s/AKfycbyBxIase-cainOGmUnhwq3UcHOQmL6_dg3DtDJRQ3iDTt3dK0SLCPd5xEZQ-zrgThP_/exec" +
     "?action=notams&callback=handleNOTAMs";
   document.body.appendChild(s);
 }

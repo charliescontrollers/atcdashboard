@@ -265,48 +265,58 @@ function handleNOTAMs(data) {
   const box = document.getElementById("notam-list");
   if (!box) return;
 
-  // Safety checks
-  if (!data || !data.notams || data.notams.length === 0) {
-    box.innerHTML = "<div class='notam-empty'>No NOTAMs for today</div>";
-    return;
-  }
-
-  // Group NOTAMs by type
-  const groups = {};
-  data.notams.forEach(n => {
-    if (!groups[n.type]) groups[n.type] = [];
-    groups[n.type].push(n);
-  });
-
   box.innerHTML = "";
 
-  // Render each NOTAM group
-  Object.keys(groups).forEach(type => {
-    // Section header
-    const sectionHeader = document.createElement("div");
-    sectionHeader.className = "notam-section";
-    sectionHeader.innerText = type;
-    box.appendChild(sectionHeader);
+  const renderGroup = (title, list) => {
+    if (!list || list.length === 0) return;
 
-    // Each NOTAM under the section
-    groups[type].forEach(n => {
-      const div = document.createElement("div");
+    const header = document.createElement("div");
+    header.className = "notam-group-title";
+    header.innerText = title;
+    box.appendChild(header);
 
-      let classes = "notam";
-      if (n.expiring) classes += " notam-expiring";
-      if (n.runway) classes += " notam-runway";
-
-      div.className = classes;
-
-      div.innerHTML = `
-        <div class="notam-text">${n.text}</div>
-        <div class="notam-validity">${n.validity}</div>
-      `;
-
-      box.appendChild(div);
+    const groups = {};
+    list.forEach(n => {
+      if (!groups[n.type]) groups[n.type] = [];
+      groups[n.type].push(n);
     });
-  });
+
+    Object.keys(groups).forEach(type => {
+      const sec = document.createElement("div");
+      sec.className = "notam-section";
+      sec.innerText = type;
+      box.appendChild(sec);
+
+      groups[type].forEach(n => {
+        const div = document.createElement("div");
+
+        let cls = "notam";
+        if (n.expiring) cls += " notam-expiring";
+        if (n.runway) cls += " notam-runway";
+
+        div.className = cls;
+        div.innerHTML = `
+          <div class="notam-text">${n.text}</div>
+          <div class="notam-validity">${n.validity}</div>
+        `;
+        box.appendChild(div);
+      });
+    });
+  };
+
+  renderGroup("ACTIVE NOTAMs", data.active);
+  renderGroup("UPCOMING TODAY", data.upcoming);
+  renderGroup("TOMORROW", data.tomorrow);
+
+  if (
+    (!data.active || data.active.length === 0) &&
+    (!data.upcoming || data.upcoming.length === 0) &&
+    (!data.tomorrow || data.tomorrow.length === 0)
+  ) {
+    box.innerHTML = "<div>No NOTAMs available</div>";
+  }
 }
+
 
 
 /* =========================

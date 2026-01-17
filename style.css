@@ -259,7 +259,6 @@ h1 { margin-top: 0; }
   inset: 0;
   z-index: -1;
 }
-
 /* Keep dashboard content above */
 body {
   position: relative;

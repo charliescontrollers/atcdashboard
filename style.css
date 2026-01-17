@@ -232,3 +232,23 @@ h1 { margin-top: 0; }
   color: #475569;
 }
 
+/* =========================
+   SCROLLABLE NOTAM PANEL
+========================= */
+
+#notam-list {
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* Group titles */
+.notam-group-title {
+  margin-top: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  color: #1e293b;
+  border-bottom: 2px solid #475569;
+  padding-bottom: 4px;
+}
+

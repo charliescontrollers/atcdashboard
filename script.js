@@ -1,3 +1,26 @@
+let vantaEffect = null;
+
+function initVanta() {
+  if (vantaEffect) return;
+
+  vantaEffect = VANTA.CLOUDS({
+    el: "#vanta-bg",
+    mouseControls: false,
+    touchControls: false,
+    gyroControls: false,
+    skyColor: 0xf4f7fb,      // match dashboard bg
+    cloudColor: 0xd1d5db,    // light grey
+    cloudShadowColor: 0x9ca3af,
+    sunColor: 0xffffff,
+    sunGlareColor: 0xffffff,
+    sunlightColor: 0xffffff,
+    speed: 0.3               // SLOW = professional
+  });
+}
+
+window.addEventListener("load", initVanta);
+
+
 /* =========================
    NIGHT MODE
 ========================= */
